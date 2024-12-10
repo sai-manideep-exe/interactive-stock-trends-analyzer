@@ -11,7 +11,6 @@ FAISS_text.csv
 New Text Document.txt
 faiss_store_openai.pkl
 faiss_store_huggingface.pkl
-.env
 faiss_store.pkl
 faiss.ipynb
 NEW-VENV
