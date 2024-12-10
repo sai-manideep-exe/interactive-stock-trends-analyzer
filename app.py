@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Check if the API key is being read properly
-openai_api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 if not openai_api_key:
     st.error("Error: API key not found. Please check your .env file or environment variables.")
     raise ValueError("API key not found. Please check your .env file or environment variables.")
