@@ -10,34 +10,34 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
 
-# Load environment variables from the .env file
+# Load environment variables from .env file (for local development)
 load_dotenv()
 
-# Retrieve the API key from the environment variables
+# Check if the API key is being read properly
 openai_api_key = os.getenv("OPENAI_API_KEY")
-
-# Ensure the API key is loaded correctly
 if not openai_api_key:
-    st.error("API key not found. Please check your .env file or environment variables.")
-    st.stop()
+    st.error("Error: API key not found. Please check your .env file or environment variables.")
+    raise ValueError("API key not found. Please check your .env file or environment variables.")
 
+# Initialize the OpenAI LLM with the API key
+llm = OpenAI(temperature=0.9, max_tokens=500, openai_api_key=openai_api_key)
+
+# Streamlit app setup
 st.title("News Research Tool 📈")
 st.sidebar.title("News Article URLs")
 
+# Get URLs from the sidebar
 urls = []
 for i in range(3):
     url = st.sidebar.text_input(f"URL {i+1}")
     urls.append(url)
 
 process_url_clicked = st.sidebar.button("Process URLs")  # Button to initiate processing of entered URLs
-file_path = "faiss_store_openai.pkl"  # File path for storing serialized FAISS index 
+file_path = "faiss_store_openai.pkl"  # File path for storing serialized FAISS index
 
 main_placeholder = st.empty()  # Placeholder for main content area
 
-# Initialize the OpenAI language model with the API key
-llm = OpenAI(temperature=0.9, max_tokens=500, openai_api_key=openai_api_key)
-
-if process_url_clicked: 
+if process_url_clicked:
     loader = UnstructuredURLLoader(urls=urls)
     main_placeholder.text("Data Loading...Started...✅✅✅")  # Display loading message
     data = loader.load()
