@@ -1,4 +1,3 @@
-
 import os
 import streamlit as st
 import pickle
@@ -11,7 +10,16 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env (especially openai api key)
+# Load environment variables from the .env file
+load_dotenv()
+
+# Retrieve the API key from the environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+# Ensure the API key is loaded correctly
+if not openai_api_key:
+    st.error("API key not found. Please check your .env file or environment variables.")
+    st.stop()
 
 st.title("News Research Tool 📈")
 st.sidebar.title("News Article URLs")
@@ -25,7 +33,9 @@ process_url_clicked = st.sidebar.button("Process URLs")  # Button to initiate pr
 file_path = "faiss_store_openai.pkl"  # File path for storing serialized FAISS index 
 
 main_placeholder = st.empty()  # Placeholder for main content area
-llm = OpenAI(temperature=0.9, max_tokens=500)  # Initializing OpenAI language model 
+
+# Initialize the OpenAI language model with the API key
+llm = OpenAI(temperature=0.9, max_tokens=500, openai_api_key=openai_api_key)
 
 if process_url_clicked: 
     loader = UnstructuredURLLoader(urls=urls)
@@ -51,7 +61,6 @@ if process_url_clicked:
     with open(file_path, "wb") as f:
         pickle.dump(pkl, f)
 
-
 # Input field for user query
 query = main_placeholder.text_input("Question: ")
 
@@ -74,6 +83,3 @@ if query:
                 sources_list = sources.split("\n")  # Split sources by newline
                 for source in sources_list:
                     st.write(source)  # Display each source
-
-
-
