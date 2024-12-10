@@ -6,3 +6,6 @@ python-dotenv
 langchain_community
 tiktoken
 python-dotenv
+unstructured
+
+
