@@ -6,7 +6,7 @@ Untitled.ipynb
 testing.ipynb
 text_split.ipynb
 Tata_Motors.txt
-.env
+*.env
 retrival.ipynb
 FAISS_text.csv
 New Text Document.txt
