@@ -321,19 +321,9 @@ This project is open source and available under the MIT License.
 ## Support & Contact
 
 - **Report Issues:** [GitHub Issues](https://github.com/sai-manideep-exe/interactive-stock-trends-analyzer/issues)
-- **Questions?** Open a discussion or reach out!
+- **Questions?** Open a discussion or reach out! 
 
 ---
 
-## Changelog
-
-### v1.0.0 (Nov 26, 2025)
-- ✅ Migrated from LangChain v0.x to v1.x
-- ✅ Replaced deprecated `RetrievalQAWithSourcesChain` with modern retrieval pattern
-- ✅ Added User-Agent headers for bot detection bypass
-- ✅ Comprehensive error handling and user feedback
-- ✅ Production-ready Streamlit Cloud deployment
-
----
 
 **Built with ❤️ using LangChain, OpenAI, and Streamlit**
