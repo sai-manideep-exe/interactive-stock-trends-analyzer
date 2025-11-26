@@ -42,7 +42,12 @@ if process_url_clicked:
         st.stop()
     
     try:
-        loader = UnstructuredURLLoader(urls=valid_urls)
+        # Add headers to bypass 403 Forbidden blocks (simulate browser request)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        
+        loader = UnstructuredURLLoader(urls=valid_urls, headers=headers)
         main_placeholder.text("Data Loading...Started...✅✅✅")  # Display loading message
         data = loader.load()
         
