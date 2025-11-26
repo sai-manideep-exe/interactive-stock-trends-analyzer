@@ -31,7 +31,3 @@ requests>=2.28.0
 pydantic>=2.0.0
 pyyaml>=5.1
 
-faiss-cpu==1.9.0.post1
-unstructured==0.16.8
-sentence-transformers==3.3.1
-tf-keras==2.20.1
