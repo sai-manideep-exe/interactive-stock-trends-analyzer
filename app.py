@@ -2,19 +2,16 @@ import os
 import streamlit as st
 import pickle
 import time
-from langchain import OpenAI
-from langchain.chains import RetrievalQAWithSourcesChain
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.document_loaders import UnstructuredURLLoader
-from langchain.vectorstores import FAISS
+from langchain.chains import RetrievalQAWithSourcesChain          # stays
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import UnstructuredURLLoader
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAI, OpenAIEmbeddings
 from dotenv import load_dotenv
 
 # Load environment variables from .env file (for local development)
 load_dotenv()
-
-# Check if the API key is being read properly
-openai_api_key = st.secrets["OPENAI_API_KEY"]
+openai_api_key = st.secrets("OPENAI_API_KEY")
 if not openai_api_key:
     st.error("Error: API key not found. Please check your .env file or environment variables.")
     raise ValueError("API key not found. Please check your .env file or environment variables.")
