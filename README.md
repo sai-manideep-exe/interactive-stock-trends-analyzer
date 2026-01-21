@@ -1,30 +1,31 @@
 # Interactive Stock Trends Analyzer 📈
 
-A intelligent news research application that analyzes multiple news articles using AI-powered semantic search and retrieval. Built with **LangChain v1.x**, **OpenAI**, and **Streamlit**.
+A intelligent news research application that analyzes multiple news articles using AI-powered semantic search and retrieval. Built with **LangChain v1.x**, **Google Gemini**, **HuggingFace**, and **Streamlit**.
 
-**Live Demo:** [https://interactive-stock-trends-analyzer-bs7m9vf7je9eabewh9lv2p.streamlit.app/](https://interactive-stock-trends-analyzer-bs7m9vf7je9eabewh9lv2p.streamlit.app/)
+**Live Demo:** [https://interactive-stock-trends-analyzer.streamlit.app/](https://interactive-stock-trends-analyzer.streamlit.app/)
 
 ---
 
 ## Features
 
 ✨ **Multi-URL Content Loading** — Load and process content from multiple news sources simultaneously  
-🧠 **AI-Powered Search** — Uses OpenAI embeddings to understand semantic meaning, not just keywords  
+🧠 **AI-Powered Search** — Uses HuggingFace embeddings to understand semantic meaning locally
 📚 **Vector Store with FAISS** — Fast similarity search across document chunks  
 🔍 **Source Attribution** — Every answer includes clickable links to original sources  
 ⚡ **Real-time Processing** — Progressive status updates while loading and indexing  
 🛡️ **Error Handling** — Graceful fallbacks for failed URLs or API issues  
-🔐 **Secure API Keys** — Environment-based configuration for production
+🔐 **Secure API Keys** — Environment-based configuration for production  
+🆓 **Free to Use** — Runs on Google Gemini (Free Tier) and Open Source Embeddings
 
 ---
 
 ## How It Works
 
 1. **Load URLs** → Fetches and parses content from provided news article links
-2. **Split & Embed** → Breaks content into chunks and creates semantic embeddings
-3. **Store** → Saves vector embeddings in a FAISS index for fast retrieval
+2. **Split & Embed** → Breaks content into chunks and creates semantic embeddings using HuggingFace
+3. **Store** → Saves vector embeddings in a FAISS index (Text chunks → Numbers)
 4. **Query** → User asks a question; app retrieves top 3 relevant document chunks
-5. **Answer** → ChatOpenAI generates an answer based on retrieved context
+5. **Answer** → Google Gemini 2.5 Flash generates an answer based on retrieved context
 6. **Source** → Displays source URLs for verification
 
 ---
@@ -35,7 +36,7 @@ A intelligent news research application that analyzes multiple news articles usi
 
 #### Prerequisites
 - Python 3.10+
-- OpenAI API key ([get one here](https://platform.openai.com/api-keys))
+- Google API Key ([get one here](https://aistudio.google.com/))
 
 #### Steps
 
@@ -60,12 +61,12 @@ pip install -r requirements.txt
 
 Create a `.env` file in the project root:
 ```env
-OPENAI_API_KEY=your_openai_api_key_here
+GOOGLE_API_KEY=your_google_api_key_here
 ```
 
 Or export it in your shell:
 ```bash
-export OPENAI_API_KEY="your_openai_api_key_here"
+export GOOGLE_API_KEY="your_google_api_key_here"
 ```
 
 5. **Run the app:**
@@ -83,7 +84,7 @@ The app will open at `http://localhost:8501`
 
 1. **Enter News URLs**
    - Paste 1-3 news article URLs in the sidebar
-   - Supported sources: Reuters, BBC, MoneyControl, etc.
+   - Supported sources: MoneyControl, CNBC, Bloomberg, etc.
    - Any website with readable text content works
 
 2. **Process URLs**
@@ -91,7 +92,7 @@ The app will open at `http://localhost:8501`
    - Wait for:
      - ✅ Data Loading (fetches content)
      - ✅ Text Splitter (chunks into ~1000 char pieces)
-     - ✅ Embedding Vector Building (5-30 seconds depending on content size)
+     - ✅ Embedding Vector Building (Local HuggingFace model)
 
 3. **Ask Questions**
    - Type any question about the loaded content
@@ -99,10 +100,10 @@ The app will open at `http://localhost:8501`
    - Sources are displayed below with direct links
 
 ### Example Queries
-- "What was the stock price change?"
-- "Who are the key people mentioned?"
-- "What are the main points in this article?"
-- "How did the company perform?"
+- "What was the target price mentioned?"
+- "Why did the stock jump today?"
+- "What are the key risks for this company?"
+- "Summarize the financial results."
 
 ---
 
@@ -111,8 +112,8 @@ The app will open at `http://localhost:8501`
 ### Step 1: Push to GitHub
 
 ```bash
-git add app.py requirements.txt
-git commit -m "News Research Tool - LangChain v1.x with OpenAI integration"
+git add gem.py requirements.txt
+git commit -m "Migrated to Gemini 2.5 and HuggingFace Embeddings"
 git push origin main
 ```
 
@@ -121,7 +122,7 @@ git push origin main
 1. Go to [share.streamlit.io](https://share.streamlit.io)
 2. Click **"New app"**
 3. Select your repository: `interactive-stock-trends-analyzer`
-4. Set main file: `app.py`
+4. Set main file: `gem.py`
 5. Set branch: `main`
 6. Click **"Deploy"**
 
@@ -130,7 +131,7 @@ git push origin main
 In the Streamlit Cloud app settings, add under **"Secrets"**:
 
 ```toml
-OPENAI_API_KEY = "sk-..."
+GOOGLE_API_KEY = "AIzaSy..."
 ```
 
 The app will automatically restart and use the secret.
@@ -154,7 +155,8 @@ The app will automatically restart and use the secret.
 └──────────┬──────────────────────────┘
            │
 ┌──────────▼─────────────────┐
-│  OpenAI Embeddings         │  Creates semantic vectors
+│  HuggingFace Embeddings    │  Creates semantic vectors locally
+│  (all-MiniLM-L6-v2)        │
 └──────────┬─────────────────┘
            │
 ┌──────────▼─────────────────┐
@@ -166,7 +168,7 @@ The app will automatically restart and use the secret.
 └──────────┬──────────────┘
            │
 ┌──────────▼──────────────────┐
-│  ChatOpenAI                  │  Generates answer from context
+│  Google Gemini 2.5 Flash     │  Generates answer from context
 └──────────┬──────────────────┘
            │
 ┌──────────▼──────────────┐
@@ -182,7 +184,7 @@ The app will automatically restart and use the secret.
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `OPENAI_API_KEY` | ✅ Yes | — | Your OpenAI API key |
+| `GOOGLE_API_KEY` | ✅ Yes | — | Your Google Gemini API Key |
 
 ### Streamlit Config
 
@@ -202,43 +204,14 @@ font = "sans serif"
 
 ---
 
-## Troubleshooting
-
-### "Error: API key not found"
-- **Local:** Make sure `.env` file exists with `OPENAI_API_KEY=...`
-- **Streamlit Cloud:** Add secret via app settings (Settings → Secrets)
-
-### "HTTP Error 403: Forbidden"
-- Some websites block automated scraping
-- **Solution:** Try different URLs from Reuters, BBC, or other sources
-- The app includes a User-Agent header to bypass basic bot detection
-
-### "No content could be loaded"
-- URL might be behind a paywall or require authentication
-- Try a publicly accessible news article
-- Check if the website allows scraping in its `robots.txt`
-
-### Slow response times
-- **First load:** Embeddings take 10-30 seconds (depends on content size)
-- **Query time:** OpenAI API calls typically take 5-10 seconds
-- This is normal; consider caching for production use
-
-### Out of memory error
-- Large articles create many chunks
-- Reduce chunk size in code (line 57: `chunk_size=1000`)
-- Or process fewer/shorter articles
-
----
-
 ## Dependencies
 
 Core packages (see `requirements.txt` for exact versions):
 - **streamlit** — Web UI framework
-- **langchain** — LLM orchestration (v1.x)
-- **langchain-openai** — OpenAI integration
-- **langchain-community** — Document loaders & vector stores
+- **langchain** — LLM orchestration
+- **langchain-google-genai** — Google Gemini integration
+- **sentence-transformers** — Open source embeddings
 - **faiss-cpu** — Vector similarity search
-- **openai** — API client
 - **python-dotenv** — Environment management
 
 ---
@@ -247,56 +220,39 @@ Core packages (see `requirements.txt` for exact versions):
 
 ### For Production Deployment
 
-1. **Cache Vector Stores**
-   ```python
-   @st.cache_resource
-   def load_vectorstore(filepath):
-       # Load FAISS index
-   ```
+1. **Cache Models**
+   The app uses `@st.cache_resource` for the embedding model to prevent reloading the 80MB model on every interaction.
 
-2. **Add Request Timeout**
-   ```python
-   requests_timeout = 30  # seconds
-   ```
+2. **Rate Limiting**
+   - Google Gemini 2.5 Flash (Free Tier) has rate limits (approx 15 RPM).
+   - If you hit `429 Resource Exhausted`, wait 60 seconds.
 
-3. **Rate Limiting**
-   - OpenAI has usage limits
-   - Streamlit Cloud has memory limits (2GB)
-   - Monitor costs at https://platform.openai.com/account/billing/overview
-
-4. **Optimize Chunk Size**
-   - Larger chunks = fewer embeddings = faster & cheaper
-   - Smaller chunks = better precision
-   - Sweet spot: 500-1500 characters
+3. **Memory Usage**
+   - Streamlit Cloud has a ~1GB-3GB RAM limit.
+   - The HuggingFace model (`all-MiniLM-L6-v2`) is optimized for low memory (~200MB), making it perfect for free cloud deployment.
 
 ---
 
 ## Future Enhancements
 
-- [ ] **Multi-language support** (GPT-4 translation)
+- [ ] **Multi-language support** (Gemini translation)
 - [ ] **PDF/document upload** (not just URLs)
-- [ ] **Vector store persistence** (S3/GitHub LFS)
 - [ ] **Conversation history** (session state)
-- [ ] **Advanced filtering** (date range, source domain)
-- [ ] **Cost tracking** (per-query OpenAI spend)
-- [ ] **Batch processing** (API for programmatic access)
-- [ ] **Different LLMs** (support Claude, Llama, etc.)
+- [ ] **Stock Charts** (integration with YFinance)
 
 ---
 
 ## Costs
 
-**Approximate costs per query (based on OpenAI pricing as of Nov 2025):**
+**Approximate costs per query:**
 
 | Component | Cost |
 |-----------|------|
-| Embedding 10KB content | ~$0.002 |
-| LLM answer generation | ~$0.01 |
-| **Total per use** | ~$0.012 |
+| Embeddings (HuggingFace) | **$0.00** (Runs locally) |
+| LLM (Gemini 2.5 Flash) | **$0.00** (Free Tier) |
+| **Total per use** | **$0.00** |
 
-**Monthly estimate:** Processing 100 articles = ~$1.20
-
-See [OpenAI pricing](https://openai.com/pricing) for current rates.
+*Note: Free tier data may be used for improvement by Google. Use paid enterprise tier for strict privacy.*
 
 ---
 
@@ -318,12 +274,4 @@ This project is open source and available under the MIT License.
 
 ---
 
-## Support & Contact
-
-- **Report Issues:** [GitHub Issues](https://github.com/sai-manideep-exe/interactive-stock-trends-analyzer/issues)
-- **Questions?** Open a discussion or reach out! 
-
----
-
-
-**Built with ❤️ using LangChain, OpenAI, and Streamlit**
+**Built with ❤️ using LangChain, Google Gemini, and Streamlit**
