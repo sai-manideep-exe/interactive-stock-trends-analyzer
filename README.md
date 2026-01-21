@@ -2,7 +2,7 @@
 
 A intelligent news research application that analyzes multiple news articles using AI-powered semantic search and retrieval. Built with **LangChain v1.x**, **Google Gemini**, **HuggingFace**, and **Streamlit**.
 
-**Live Demo:** [https://interactive-stock-trends-analyzer.streamlit.app/](https://interactive-stock-trends-analyzer.streamlit.app/)
+**Live Demo:** [](hhttps://interactive-stock-trends-analyzer-bs7m9vf7je9eabewh9lv2p.streamlit.app/ttps://interactive-stock-trends-analyzer-bs7m9vf7je9eabewh9lv2p.streamlit.app/)
 
 ---
 
