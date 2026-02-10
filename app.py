@@ -21,8 +21,8 @@ else:
     st.error("⚠️ GOOGLE_API_KEY not found. Please check your .env file.")
     st.stop()
 
-st.set_page_config(page_title="News Research Tool", page_icon="📈", layout="wide")
-st.title("📈News Research Tool")
+st.set_page_config(page_title="SourcedAI", page_icon="📈", layout="wide")
+st.title("🔍SourcedAI")
 
 # --- SIDEBAR ---
 st.sidebar.header("News Article URLs")
