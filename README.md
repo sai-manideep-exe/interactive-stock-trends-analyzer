@@ -1,4 +1,4 @@
-# Interactive Stock Trends Analyzer 📈
+# 🔍SourcedAI
 
 A intelligent news research application that analyzes multiple news articles using AI-powered semantic search and retrieval. Built with **LangChain v1.x**, **Google Gemini**, **HuggingFace**, and **Streamlit**.
 
@@ -121,7 +121,7 @@ git push origin main
 
 1. Go to [share.streamlit.io](https://share.streamlit.io)
 2. Click **"New app"**
-3. Select your repository: `interactive-stock-trends-analyzer`
+3. Select your repository
 4. Set main file: `gem.py`
 5. Set branch: `main`
 6. Click **"Deploy"**
